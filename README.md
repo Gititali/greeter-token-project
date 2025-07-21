@@ -49,7 +49,7 @@ contract GreeterToken is ERC20 {
 ---
 
 ## 🖼 Visual Promo
-- LinkedIn post published with [custom image](link/to/image)
+- LinkedIn post published with [custom image](GREETERTOKEN-IMAGE.png)
 - Messaging focused on developer growth and smart contract confidence
 
 ---
@@ -85,7 +85,7 @@ GreeterToken/
 ---
 
 ## 📎 Connect
-Follow along and connect on [LinkedIn](https://linkedin.com/in/ali-albadri) or explore more dev projects on [GitHub](https://github.com/alialbadri-dev)
+Follow along and connect on [LinkedIn](https://www.linkedin.com/in/albadria/) or explore more dev projects on [GitHub](https://github.com/Gititali)
 
 ---
 
