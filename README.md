@@ -28,6 +28,17 @@ contract GreeterToken is ERC20 {
     }
 }
 ```
+---
+## Contracts Overview
+
+### GreeterToken.sol
+Standard ERC-20 token contract with an initial supply minted to the deployer.
+
+### GreeterDispenser.sol
+A simple dispenser that sends GREET tokens to users—used as a faucet for testing purposes.
+
+### GreeterTokenFactory.sol
+Optional factory contract to deploy multiple token instances for scaling and testing deployment architecture.
 
 ---
 
