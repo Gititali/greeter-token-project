@@ -1,0 +1,49 @@
+
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.9/contracts/access/Ownable.sol";
+import "./GreeterToken_Final.sol";
+
+/// @title SecureGreeterDispenser - A secure faucet for distributing GREET tokens one time per user
+contract SecureGreeterDispenser is Ownable {
+    GreeterToken public token;
+    uint256 public amount = 100 * 10 ** 18;
+    uint256 public maxSupply = 500000 * 10 ** 18; // Max that can be claimed via this faucet
+    uint256 public totalDistributed;
+
+    mapping(address => bool) public hasClaimed;
+
+    event TokensClaimed(address indexed user, uint256 amount);
+
+    /// @notice Initializes the dispenser with the GREET token address and sets msg.sender as the owner
+    /// @param _tokenAddress The address of the GreeterToken contract
+constructor(address _tokenAddress) {
+    token = GreeterToken(_tokenAddress);
+}
+
+    /// @notice Allows users to claim a fixed amount of GREET tokens once
+    function claimTokens() external {
+        require(!hasClaimed[msg.sender], "You already claimed!");
+        require(token.balanceOf(address(this)) >= amount, "Faucet is empty");
+        require(totalDistributed + amount <= maxSupply, "Exceeds max faucet supply");
+
+        hasClaimed[msg.sender] = true;
+        totalDistributed += amount;
+
+        bool success = token.transfer(msg.sender, amount);
+        require(success, "Transfer failed");
+
+        emit TokensClaimed(msg.sender, amount);
+    }
+
+    /// @notice Owner can update the claim amount
+    function updateAmount(uint256 _newAmount) external onlyOwner {
+        amount = _newAmount;
+    }
+
+    /// @notice Owner can withdraw any remaining tokens from the contract
+    function withdrawTokens(address to, uint256 value) external onlyOwner {
+        require(token.transfer(to, value), "Withdraw failed");
+    }
+}
